@@ -143,12 +143,21 @@ function App() {
   };
 
   const handleSignUp = async () => {
-    setAuthError('');
-    try {
-      await signUp({ username: email, password, options: { userAttributes: { email } } });
-      setAuthMode('confirm');
-    } catch (err) { setAuthError(err.message); }
-  };
+  setAuthError('');
+  try {
+    await signUp({
+      username: email,
+      password,
+      options: { userAttributes: { email } }
+    });
+    // Auto-confirm — no email needed
+    await axios.post('http://localhost:5001/api/auth/confirm', { username: email });
+    setAuthMode('login');
+    setMessage('ACCOUNT_CREATED // PLEASE LOGIN');
+  } catch (err) {
+    setAuthError(err.message);
+  }
+};
 
   const handleConfirm = async () => {
     setAuthError('');
