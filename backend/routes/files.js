@@ -47,7 +47,7 @@ router.get('/list', async (req, res) => {
   }
 });
 
-// Download / share a file (presigned URL)
+// Download / share a file 
 router.get('/download/:key', async (req, res) => {
   try {
     const params = {
